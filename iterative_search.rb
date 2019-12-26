@@ -2,7 +2,7 @@ require 'csv'
 
 class IterativeSearch
   def initialize(word_list_file_name)
-    @word_list = CSV.read("words.txt").flatten
+    @word_list = CSV.read(word_list_file_name).flatten
   end
 
   def search(tiles)
