@@ -1,24 +1,28 @@
 require 'csv'
+require 'parallel'
 
 class IterativeSearch
   def initialize(word_list_file_name)
     @word_list = CSV.read(word_list_file_name).flatten
+    start = Time.now
 
     @word_list_char_counts = {}
     @word_list.each do |word|
-      word_array = word.split('')
+      #word_array = word.split('')
       word_hash = Hash.new(0)
-      word_array.each do |char|
+      word.each_char do |char|
         word_hash[char] += 1
       end
       @word_list_char_counts[word] = word_hash
     end
+
+    total_time = Time.now - start
+    puts "Built lookup hash in: #{total_time} sec"
   end
 
   def search(tiles)
-    tile_array = tiles.split('')
     tile_hash = Hash.new(0)
-    tile_array.each do |char|
+    tiles.each_char do |char|
       tile_hash[char] += 1
     end
 

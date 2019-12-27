@@ -4,7 +4,7 @@ require_relative 'constraint_filter.rb'
 
 
 @iterative_search = IterativeSearch.new("words.txt")
-@trie_search = TrieSearch.new("words.txt")
+#@trie_search = TrieSearch.new("words.txt")
 
 my_tiles = ""
 while true do
