@@ -38,10 +38,26 @@ class Board
     return board
   end
 
-  def get(col, row)
+  def get_hoizontal_word(col, row)
     visited = Set.new
     visited << [col, row]
-    @grid[[col,row]]
+
+    current_col = col
+    current_row = row
+
+    while current_col >= 0 && !get_square(current_col, current_row).value.nil?
+      puts "here" + get_square(current_col, current_row).value
+      current_col -= 1
+    end
+    current_col += 1
+    word_array = []
+    while current_col <= @x_limit && !get_square(current_col, current_row).value.nil?
+      puts "ahere" + get_square(current_col, current_row).value
+      word_array << get_square(current_col, current_row).value
+      current_col += 1
+    end
+
+    return word_array
   end
 
   def print
