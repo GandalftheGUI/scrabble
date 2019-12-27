@@ -6,6 +6,7 @@ t.add("a")
 t.add("cheese")
 t.add("cat")
 t.add("cataract")
+t.add("cater")
 t.add("caterer")
 
 t.add("dog")
@@ -18,3 +19,5 @@ puts all_words.to_s
 puts all_words.map { |w| t.contains?(w) }
 puts "Should be false: #{t.contains? "d"}"
 puts "Should be true: #{t.contains? "do"}"
+
+puts t.words_along_the_way("caterer".split("")).to_s

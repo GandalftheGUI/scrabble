@@ -6,12 +6,16 @@ class TrieSearch
 
     @trie = Trie.new
     word_list.each do |word|
-      @trie.add_word(word)
+      @trie.add(word)
     end
   end
 
   def search(tiles)
     tile_array = tiles.split('')
-
+    words = Set.new
+    tile_array.permutation.each do |word_array|
+      words = words + @trie.words_along_the_way(word_array)
+    end
+    return words
   end
 end

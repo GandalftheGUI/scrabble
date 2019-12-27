@@ -38,6 +38,25 @@ class Trie
     return current_node.word == true
   end
 
+  def words_along_the_way(word_array)
+    #word_array = word.split("")
+    words = Set.new
+    children = @children
+    current_chars = []
+
+    word_array.each do |char|
+      return words if children[char].nil?
+      current_chars << char
+
+      if children[char].word
+        words << current_chars.join
+      end
+
+      children = children[char].children
+    end
+    return words
+  end
+
   def all
     to_process = []
     words = []

@@ -21,16 +21,16 @@ class IterativeSearch
 
   private
 
-  def can_make?(tile_hash, cadidate_word)
-    cadidate_word_array = cadidate_word.split('')
-    cadidate_word_hash = Hash.new(0)
-    cadidate_word_array.each do |char|
-      cadidate_word_hash[char] += 1
+  def can_make?(tile_hash, candidate_word)
+    candidate_word_array = candidate_word.split('')
+    candidate_word_hash = Hash.new(0)
+    candidate_word_array.each do |char|
+      candidate_word_hash[char] += 1
     end
 
     off_by_allowance = tile_hash["?"]
 
-    cadidate_word_hash.each do |char, count|
+    candidate_word_hash.each do |char, count|
       #if you need 'aa' and have 'aaa' left_over_tile_count = 1 aka no problem
       #if you need 'aaa' and have 'aa' left_over_tile_count = -1 aka there is a problem
       left_over_tile_count = tile_hash[char] - count
