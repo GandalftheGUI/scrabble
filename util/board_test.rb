@@ -28,8 +28,19 @@ puts "should equal BAT: #{b.get_hoizontal_word(2,6).join}"
 
 b.place_tile("x", 13, 5)
 b.place_tile("i", 14, 5)
+
+b.place_tile("b", 10, 5)
+b.place_tile("i", 11, 5)
+
+b.place_tile("h", 0, 5)
+b.place_tile("i", 1, 5)
 b.print
 
 puts "should equal XI: #{b.get_hoizontal_word(13,5).join}"
 puts "should equal XI: #{b.get_hoizontal_word(14,5).join}"
+
+
+puts "should include HIBIXI: #{b.get_hoizontal_letters(5).join}"
+
+puts "should include : #{b.get_row_info(5).to_s}"
 

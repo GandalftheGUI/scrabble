@@ -1,5 +1,5 @@
 class Square
-  attr_accessor :value
+  attr_accessor :letter
   attr_reader :word_multiplier, :letter_multiplier
 
   def initialize(word_multiplier: 1, letter_multiplier: 1)
@@ -8,12 +8,12 @@ class Square
   end
 
   def occupied?
-    !value.nil?
+    !letter.nil?
   end
 
   def to_s
-    if value
-      highlight "#{value} "
+    if letter
+      highlight "#{letter.upcase} "
     elsif @word_multiplier == 3
       purple "tw"
     elsif @letter_multiplier == 3

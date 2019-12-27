@@ -29,35 +29,64 @@ class Board
     board_array = CSV.read(File.dirname(__FILE__) + "/boards/wwf.txt")
     board = self.new(board_array.first.length, board_array.length)
     board_array.each_with_index do |row, column_index|
-      row.each_with_index do |value, row_index|
-        puts "v: '#{value}'"
-        board.grid[[column_index, row_index]] = Square.new(**MULTIPLIERS[(value || "").gsub(/\s+/, "") ])
+      row.each_with_index do |type, row_index|
+        board.grid[[column_index, row_index]] = Square.new(**MULTIPLIERS[(type || "").gsub(/\s+/, "") ])
       end
     end
 
     return board
   end
 
+  def get_all_hoizontal_words
+  end
+
   def get_hoizontal_word(col, row)
-    visited = Set.new
-    visited << [col, row]
-
     current_col = col
-    current_row = row
 
-    while current_col >= 0 && !get_square(current_col, current_row).value.nil?
-      puts "here" + get_square(current_col, current_row).value
+
+    while current_col >= 0 && !get_square(current_col, row).letter.nil?
       current_col -= 1
     end
     current_col += 1
+
     word_array = []
-    while current_col <= @x_limit && !get_square(current_col, current_row).value.nil?
-      puts "ahere" + get_square(current_col, current_row).value
-      word_array << get_square(current_col, current_row).value
+    while current_col <= @x_limit && !get_square(current_col, row).letter.nil?
+      word_array << get_square(current_col, row).letter
       current_col += 1
     end
-
     return word_array
+  end
+
+  def get_hoizontal_letters(row)
+    current_col = 0
+    current_row = row
+    letters = []
+    while current_col <= @x_limit
+      letter = get_square(current_col, current_row).letter
+      letters << letter unless letter.nil?
+      current_col += 1
+    end
+    return letters
+  end
+
+  def get_row_info(row)
+    current_col = 0
+    current_row = row
+    constraint_array = []
+    letters = []
+    while current_col <= @x_limit
+      letter = get_square(current_col, current_row).letter
+
+      if letter.nil?
+        constraint_array <<  "-"
+      else
+        constraint_array << letter
+        letters << letter
+      end
+
+      current_col += 1
+    end
+    return {constraint_array: constraint_array, letters: letters}
   end
 
   def print
@@ -66,13 +95,13 @@ class Board
       (0..@x_limit).each do |x|
         row << grid[[x,y]].to_s
       end
-      puts row.join("|")
+      puts y.to_s.rjust(2, " ") + " " + row.join("|")
     end
-    puts "-" * (@x_limit * 3 + 2)
+    puts "   --------------------------------------------"
   end
 
   def place_tile(letter, col, row)
-    get_square(col, row).value = letter.upcase
+    get_square(col, row).letter = letter.downcase
   end
 
   def get_square(col, row)
