@@ -4,7 +4,7 @@ require_relative "square.rb"
 class Board
   TRIPLE_WORD = "TW"
   DOUBLE_WORD = "DW"
-  TRIPPLE_LETTER = "TW"
+  TRIPPLE_LETTER = "TL"
   DOULBE_LETTER = "DL"
 
   MULTIPLIERS = {
@@ -29,9 +29,12 @@ class Board
     board = self.new(board_array.first.length, board_array.length)
     board_array.each_with_index do |row, column_index|
       row.each_with_index do |value, row_index|
-        board.grid[[column_index, row_index]] = Square.new(*MULTIPLIERS[value.chomp])
+        puts "v: '#{value}'"
+        board.grid[[column_index, row_index]] = Square.new(**MULTIPLIERS[(value || "").gsub(/\s+/, "") ])
       end
     end
+
+    return board
   end
 
   def print
@@ -42,5 +45,10 @@ class Board
       end
       puts row.join("|")
     end
+    puts "-" * (@x_limit * 3 + 2)
+  end
+
+  def place_tile(letter, col, row)
+    @grid[[col, row]].value = letter.upcase
   end
 end
