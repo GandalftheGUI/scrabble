@@ -3,6 +3,16 @@ require 'csv'
 class IterativeSearch
   def initialize(word_list_file_name)
     @word_list = CSV.read(word_list_file_name).flatten
+
+    @word_list_char_counts = {}
+    @word_list.each do |word|
+      word_array = word.split('')
+      word_hash = Hash.new(0)
+      word_array.each do |char|
+        word_hash[char] += 1
+      end
+      @word_list_char_counts[word] = word_hash
+    end
   end
 
   def search(tiles)
@@ -22,11 +32,13 @@ class IterativeSearch
   private
 
   def can_make?(tile_hash, candidate_word)
-    candidate_word_array = candidate_word.split('')
-    candidate_word_hash = Hash.new(0)
-    candidate_word_array.each do |char|
-      candidate_word_hash[char] += 1
-    end
+    # candidate_word_array = candidate_word.split('')
+    # candidate_word_hash = Hash.new(0)
+    # candidate_word_array.each do |char|
+    #   candidate_word_hash[char] += 1
+    # end
+
+    candidate_word_hash = @word_list_char_counts[candidate_word]
 
     off_by_allowance = tile_hash["?"]
 
