@@ -3,47 +3,51 @@ require "set"
 
 class Trie
   def initialize
-    @root = {}
+    @children = {}
   end
 
-  def add_word(word)
+  def add(word)
     word_array = word.split("")
-    current_node = root[char]
+    current_node = nil
+    children = @children
 
     word_array.each do |char|
-      if current_node.nil?
-        current_node = TrieNode.new
+      if children[char].nil?
+        children[char] = TrieNode.new
       end
-      current_node = current_node[char]
+      current_node = children[char]
+      children = current_node.children
     end
 
     current_node.word = true
   end
 
-  def is_word?(word)
+  def contains?(word)
     word_array = word.split("")
-    current_node = root[char]
+    current_node = nil
+    children = @children
 
     word_array.each do |char|
-      if current_node.nil?
-        return false
+      if children[char].nil?
+        creturn false
       end
-      current_node = current_node[char]
+      current_node = children[char]
+      children = current_node.children
     end
 
     return current_node.word == true
   end
 
-  def all_words
+  def all
     to_process = []
     words = []
 
-    @root.each do |char, node|
+    @children.each do |char, node|
       to_process << [char, node]
     end
 
     while to_process.any? do
-      current_node, current_chars = to_process.pop
+      current_chars, current_node = to_process.pop
       if current_node.word
         words << current_chars
       end
@@ -52,5 +56,7 @@ class Trie
         to_process << [current_chars + char, node]
       end
     end
+
+    return words
   end
 end
