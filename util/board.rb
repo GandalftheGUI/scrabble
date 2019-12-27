@@ -1,5 +1,6 @@
 require "csv"
 require_relative "square.rb"
+require "set"
 
 class Board
   TRIPLE_WORD = "TW"
@@ -37,6 +38,12 @@ class Board
     return board
   end
 
+  def get(col, row)
+    visited = Set.new
+    visited << [col, row]
+    @grid[[col,row]]
+  end
+
   def print
     (0..@y_limit).each do |y|
       row = []
@@ -49,6 +56,10 @@ class Board
   end
 
   def place_tile(letter, col, row)
-    @grid[[col, row]].value = letter.upcase
+    get_square(col, row).value = letter.upcase
+  end
+
+  def get_square(col, row)
+    @grid[[col, row]]
   end
 end
